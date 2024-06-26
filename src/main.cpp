@@ -8,9 +8,12 @@
 int main()
 {
 
-    Server server = Server();
+    auto server = net::Server(8888, "127.0.0.1");
 
-    
+    server.start();
+
+
+
 
     return 0;
 }
