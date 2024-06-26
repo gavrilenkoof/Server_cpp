@@ -1,15 +1,18 @@
 #include <iostream>
 
 
+#include <lib/server/server.h>
+
+
 
 
 int main()
 {
 
+    Server server = Server();
 
-    std::cout << "HELLO" << std::endl;
 
-
+    
 
     return 0;
 }
