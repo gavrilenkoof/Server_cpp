@@ -1,1 +1,1 @@
-add_library(server server.cpp)
+add_library(server STATIC server.cpp)

@@ -12,9 +12,10 @@ add_executable(app ${SOURCE_EXE})
 
 #targets link
 add_subdirectory(lib EXCLUDE_FROM_ALL)
-target_link_libraries(app PUBLIC server)
 target_include_directories(app PUBLIC
                           "${PROJECT_BINARY_DIR}"
                           "${PROJECT_SOURCE_DIR}"
                           )
 
+
+target_link_libraries(app PUBLIC server)
