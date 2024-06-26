@@ -3,4 +3,33 @@ CMakeCache.txt
 build/
 CMakeFiles/
 Makefile
-# .vscode/
+app
+# in tree build
+**/*.a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
