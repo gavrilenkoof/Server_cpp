@@ -30,7 +30,7 @@ int Server::init()
 
     _socket_addr.sin_family = AF_INET;
     _socket_addr.sin_port = htons(_port);
-    _socket_addr.sin_addr.s_addr = inet_addr(_ipaddr.c_str());
+    _socket_addr.sin_addr.s_addr = INADDR_ANY;
 
     _socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
     if(_socket_fd == -1){
@@ -39,11 +39,11 @@ int Server::init()
     }
 
 
-    int bind_status = bind(_socket_fd, (struct sockaddr*) &_socket_addr, sizeof(_socket_addr)); 
-    if(bind_status < 0){
-        std::cerr << "[ERROR] Error bind\n";
-        return ret;
-    }
+    // int bind_status = bind(_socket_fd, (struct sockaddr*) &_socket_addr, _sock_addr_len); 
+    // if(bind_status < 0){
+    //     std::cerr << "[ERROR] Error bind\n";
+    //     return ret;
+    // }
 
     ret = 0;
     return ret;
@@ -53,7 +53,44 @@ int Server::init()
 
 void Server::recieve()
 {
-    _recv_size = recvfrom(_socket_fd, _buffer, BUFFER_SIZE, 0, (struct sockaddr*) & _socket_addr, (socklen_t*)_sock_addr_len);
+
+    socklen_t len = sizeof(_sock_addr_len);
+
+    _recv_size = recvfrom(_socket_fd, _buffer, BUFFER_SIZE, 0, (struct sockaddr*) & _socket_addr, &len);
+
+    if(_recv_size == -1){
+        std::cerr << "[ERROR] recieve" << std::endl;
+        exit(-1);
+    }
+
+}
+
+
+void Server::process()
+{
+
+    // do some work here
+    if(_recv_size > 0){
+
+        std::cout << "Server: ";
+        for(int i = 0; i < _recv_size; ++i){
+            std::cout << _buffer[i];
+        }
+
+        std::cout << std::endl;
+
+    }
+
+}
+
+
+void Server::send()
+{
+
+    if(sendto(_socket_fd, _buffer, _recv_size, 0, (struct sockaddr*)&_socket_addr, (socklen_t)_sock_addr_len) == -1){
+        std::cerr << "[ERROR] send" << std::endl;
+        exit(-1);
+    }
 
 }
 
@@ -66,6 +103,8 @@ void Server::start()
 
     for(;;){
         recieve();
+        process();
+        send();
     }
 
 

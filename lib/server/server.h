@@ -32,8 +32,8 @@ public:
 private:
     int init();
     void recieve();
-    // void process();
-    // void send();
+    void process();
+    void send();
 
 
     static constexpr uint16_t BUFFER_SIZE = 1024;
@@ -41,7 +41,7 @@ private:
     int _port;
     std::string _ipaddr;
 
-    sockaddr_in _socket_addr;
+    sockaddr_in _socket_addr{0};
     int _socket_fd;
     int _sock_addr_len;
 
