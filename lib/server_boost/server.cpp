@@ -36,12 +36,21 @@ void udp_server::_handle_receive(const boost::system::error_code& error,
 {
 
     if(!error){
-        std::shared_ptr<std::string> message(new std::string("Hello\n"));
+  
+
+        for(int i = 0; i < bytes_transferred; ++i){
+            std::cout << _recv_buffer[i];
+        }     
+        std::cout << std::endl;
+
+        std::shared_ptr<std::string> message(new std::string("Hello from server\n"));
 
         _socket.async_send_to(boost::asio::buffer(*message), _remote_endpoint, 
             boost::bind(&udp_server::_handle_send, this, 
             boost::asio::placeholders::error, 
             boost::asio::placeholders::bytes_transferred));
+
+        _start_receive();
     }
 
 }

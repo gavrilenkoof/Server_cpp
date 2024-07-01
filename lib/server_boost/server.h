@@ -1,8 +1,10 @@
 #pragma once
 
+#include <iostream>
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
+
 
 
 using boost::asio::ip::udp;
@@ -30,7 +32,7 @@ private:
 private:
     udp::socket _socket;
     udp::endpoint _remote_endpoint;
-    std::array<char, 1> _recv_buffer;
+    std::array<char, 1024> _recv_buffer;
 };
 
 
