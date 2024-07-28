@@ -1,0 +1,1 @@
+add_library(server_boost STATIC server.cpp)
